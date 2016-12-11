@@ -40,7 +40,7 @@ namespace Snake
             initFood();
         }
 
-        void initBoard()
+        void initBoard() //tworzymy planszę
         {
             for (int i = 0; i < grid.Width / SIZE; i++)
             {
@@ -61,7 +61,7 @@ namespace Snake
 
         }
 
-        void initSnake()
+        void initSnake() //tworzymy węża
         {
             grid.Children.Add(_snake.Head.Rect);
             foreach (SnakeFragment snakeFragment in _snake.Fragments)
@@ -69,20 +69,20 @@ namespace Snake
             _snake.DrawSnake();
         }
 
-        private void SnakeMove()
+        private void SnakeMove() //poruszanie się
         {
             int snakeFragmentCount = _snake.Fragments.Count;
             if (_FragmentsAdd > 0)
             {
                 SnakeFragment newFragment = new SnakeFragment(_snake.Fragments[_snake.Fragments.Count - 1].X,
-                    _snake.Fragments[_snake.Fragments.Count -1].Y);
+                    _snake.Fragments[_snake.Fragments.Count - 1].Y);
                 grid.Children.Add(newFragment.Rect);
                 _snake.Fragments.Add(newFragment);
                 _FragmentsAdd--;
             }
-           for (int i = snakeFragmentCount -1; i >= 1; i--)
+            for (int i = snakeFragmentCount - 1; i >= 1; i--)
             {
-               _snake.Fragments[i].X = _snake.Fragments[i - 1].X;
+                _snake.Fragments[i].X = _snake.Fragments[i - 1].X;
                 _snake.Fragments[i].Y = _snake.Fragments[i - 1].Y;
             }
 
@@ -96,7 +96,7 @@ namespace Snake
                 DrawFood();
         }
 
-        void initTimer()
+        void initTimer() //czas
         {
             _timer = new DispatcherTimer();
             _timer.Tick += new EventHandler(_timer_Tick);
@@ -105,12 +105,13 @@ namespace Snake
 
         }
 
-        void _timer_Tick(object sender, EventArgs e)
+        void _timer_Tick(object sender, EventArgs e) //ruch węża w czasie
         {
             SnakeMove();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
+        //poruszanie się za pomocą strzałek
         {
             if (e.Key == Key.Left)
             {
@@ -137,7 +138,7 @@ namespace Snake
             }
         }
 
-        void initFood()
+        void initFood() //tworzymy jedzenie
         {
             _food = new SnakeFragment(10, 10);
             _food.Rect.Width = _food.Rect.Height = 10;
@@ -148,7 +149,7 @@ namespace Snake
 
         }
 
-        private bool FoodCheck()
+        private bool FoodCheck() //sprawdzamy pojawienie się jedzenia
         {
             Random rand = new Random();
             if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y)
@@ -179,7 +180,7 @@ namespace Snake
                     }
                 End();
 
-          }
+            }
 
             return false;
         }
@@ -192,12 +193,12 @@ namespace Snake
             foreach (SnakeFragment snakeFragment in _snake.Fragments)
             {
                 if (snakeFragment.X == x && snakeFragment.Y == y)
-                    return false;        
+                    return false;
             }
             return true;
         }
 
-        void End()
+        void End() //koniec gry
         {
             _timer.Stop();
             MessageBox.Show("KONIEC GRY");
@@ -209,6 +210,38 @@ namespace Snake
             Grid.SetColumn(_food.Rect, _food.X);
             Grid.SetRow(_food.Rect, _food.Y);
         }
+
+
+        bool CollisionCheck()
+        {
+            if (CollisionCheckBorder())
+                return true;
+            if (CollisionCheckSnake())
+                return true;
+            return false;
+
+        }
+
+        bool CollisionCheckBorder()
+        {
+            if (_snake.Head.X < 0 || _snake.Head.X > grid.Width / SIZE)
+                return true;
+            if (_snake.Head.Y < 0 || _snake.Head.Y > grid.Height / SIZE)
+                return true;
+            return false;
+
+        }
+
+        bool CollisionCheckSnake()
+        {
+            foreach (SnakeFragment snakeFragment in _snake.Fragments)
+            {
+                if (_snake.Head.X == snakeFragment.X && _snake.Head.Y == snakeFragment.Y)
+                    return true;
+            }
+            return false;
+        }
+
 
     }
 
