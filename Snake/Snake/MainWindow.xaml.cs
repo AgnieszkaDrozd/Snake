@@ -71,7 +71,7 @@ namespace Snake
         void initWater() //woda
         {
             _water = new List<Water>();
-            Water water1 = new Water(13, 20, 15, 3);
+            Water water1 = new Water(40, 20, 15, 15);
             grid.Children.Add(water1.Rect);
             Grid.SetColumn(water1.Rect, water1.X);
             Grid.SetRow(water1.Rect, water1.Y);
@@ -80,7 +80,7 @@ namespace Snake
             _water.Add(water1);
 
             _water = new List<Water>();
-            Water water2 = new Water(30, 30, 10, 5);
+            Water water2 = new Water(11, 11, 10, 50);
             grid.Children.Add(water2.Rect);
             Grid.SetColumn(water2.Rect, water2.X);
             Grid.SetRow(water2.Rect, water2.Y);
