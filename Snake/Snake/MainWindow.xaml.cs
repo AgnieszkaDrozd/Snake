@@ -26,6 +26,8 @@ namespace Snake
         private int _directionX = 1;
         private int _directionY = 0;
         private DispatcherTimer _timer;
+        private SnakeFragment _food;
+        private int _FragmentsAdd;
 
 
         public MainWindow()
@@ -34,7 +36,8 @@ namespace Snake
 
             initBoard();
             initSnake();
-            InitTimer();
+            initTimer();
+            initFood();
         }
 
         void initBoard()
@@ -80,9 +83,11 @@ namespace Snake
             _snake.Head.Y += _directionY;
             _snake.DrawSnake();
 
+            if (FoodCheck())
+                DrawFood();
         }
 
-        void InitTimer()
+        void initTimer()
         {
             _timer = new DispatcherTimer();
             _timer.Tick += new EventHandler(_timer_Tick);
@@ -113,7 +118,7 @@ namespace Snake
             if (e.Key == Key.Up)
             {
                 _directionX = 0;
-                _directionY =-10;
+                _directionY = -1;
             }
 
             if (e.Key == Key.Down)
@@ -123,5 +128,79 @@ namespace Snake
             }
         }
 
+        void initFood()
+        {
+            _food = new SnakeFragment(10, 10);
+            _food.Rect.Width = _food.Rect.Height = 10;
+            _food.Rect.Fill = Brushes.Aqua;
+            grid.Children.Add(_food.Rect);
+            Grid.SetColumn(_food.Rect, _food.X);
+            Grid.SetRow(_food.Rect, _food.Y);
+
+        }
+
+        private bool FoodCheck()
+        {
+            Random rand = new Random();
+            if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y)
+            {
+                _FragmentsAdd += 20;
+                for (int i = 0; i < 20; i++)
+                {
+                    int x = rand.Next(0, (int)(grid.Width / SIZE));
+                    int y = rand.Next(0, (int)(grid.Height / SIZE));
+                    if (FreeField(x, y))
+                    {
+                        _food.X = x;
+                        _food.Y = y;
+                        return true;
+
+                    }
+                }
+
+                for (int i = 0; i < grid.Width / SIZE; i++)
+                    for (int j = 0; j < grid.Height / SIZE; j++)
+                    {
+                        if (FreeField(i, j))
+                        {
+                            _food.X = i;
+                            _food.Y = j;
+                            return true;
+                        }
+                    }
+                End();
+
+          }
+
+            return false;
+        }
+
+        private bool FreeField(int x, int y)
+        {
+            if (_snake.Head.X == x && _snake.Head.Y == y)
+                return false;
+
+            foreach (SnakeFragment snakeFragment in _snake.Fragments)
+            {
+                if (snakeFragment.X == x && snakeFragment.Y == y)
+                    return false;        
+            }
+            return true;
+        }
+
+        void End()
+        {
+            _timer.Stop();
+            MessageBox.Show("KONIEC GRY");
+        }
+
+        private void DrawFood()
+
+        {
+            Grid.SetColumn(_food.Rect, _food.X);
+            Grid.SetRow(_food.Rect, _food.Y);
+        }
+
     }
+
 }
