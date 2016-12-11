@@ -54,11 +54,9 @@ namespace Snake
                 RowDefinition rowDefinitions = new RowDefinition();
                 rowDefinitions.Height = new GridLength(SIZE);
                 grid.RowDefinitions.Add(rowDefinitions);
-
             }
 
             _snake = new SnakeObject();
-
         }
 
         void initSnake() //tworzymy węża
@@ -90,10 +88,14 @@ namespace Snake
             _snake.Fragments[0].Y = _snake.Head.Y;
             _snake.Head.X += _directionX;
             _snake.Head.Y += _directionY;
-            _snake.DrawSnake();
-
-            if (FoodCheck())
+            if (CollisionCheck())
+                End();
+            else
+            {
+                if (FoodCheck())
                 DrawFood();
+                _snake.DrawSnake();
+            }
         }
 
         void initTimer() //czas
@@ -108,6 +110,15 @@ namespace Snake
         void _timer_Tick(object sender, EventArgs e) //ruch węża w czasie
         {
             SnakeMove();
+        }
+        void initFood() //tworzymy jedzenie
+        {
+            _food = new SnakeFragment(10, 10);
+            _food.Rect.Width = _food.Rect.Height = 10;
+            _food.Rect.Fill = Brushes.Aqua;
+            grid.Children.Add(_food.Rect);
+            Grid.SetColumn(_food.Rect, _food.X);
+            Grid.SetRow(_food.Rect, _food.Y);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -138,24 +149,15 @@ namespace Snake
             }
         }
 
-        void initFood() //tworzymy jedzenie
-        {
-            _food = new SnakeFragment(10, 10);
-            _food.Rect.Width = _food.Rect.Height = 10;
-            _food.Rect.Fill = Brushes.Aqua;
-            grid.Children.Add(_food.Rect);
-            Grid.SetColumn(_food.Rect, _food.X);
-            Grid.SetRow(_food.Rect, _food.Y);
 
-        }
 
         private bool FoodCheck() //sprawdzamy pojawienie się jedzenia
         {
             Random rand = new Random();
             if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y)
             {
-                _FragmentsAdd += 20;
-                for (int i = 0; i < 20; i++)
+                _FragmentsAdd += 1;
+                for (int i = 0; i < 30; i++)
                 {
                     int x = rand.Next(0, (int)(grid.Width / SIZE));
                     int y = rand.Next(0, (int)(grid.Height / SIZE));
@@ -179,7 +181,6 @@ namespace Snake
                         }
                     }
                 End();
-
             }
 
             return false;
@@ -212,7 +213,7 @@ namespace Snake
         }
 
 
-        bool CollisionCheck()
+        bool CollisionCheck() //sprawdzanie kolizji
         {
             if (CollisionCheckBorder())
                 return true;
@@ -222,7 +223,7 @@ namespace Snake
 
         }
 
-        bool CollisionCheckBorder()
+        bool CollisionCheckBorder() //kolizja ze krawędzią planszy
         {
             if (_snake.Head.X < 0 || _snake.Head.X > grid.Width / SIZE)
                 return true;
@@ -232,7 +233,7 @@ namespace Snake
 
         }
 
-        bool CollisionCheckSnake()
+        bool CollisionCheckSnake() //koliza z ogonem
         {
             foreach (SnakeFragment snakeFragment in _snake.Fragments)
             {
