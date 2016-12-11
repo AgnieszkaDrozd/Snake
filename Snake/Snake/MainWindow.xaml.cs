@@ -30,7 +30,7 @@ namespace Snake
         private int _FragmentsAdd;
         private List<Water> _water;
 
-        public MainWindow()
+        public MainWindow()                             //program główny
         {
             InitializeComponent();
 
@@ -41,7 +41,7 @@ namespace Snake
             initWater();
         }
 
-        void initBoard() //tworzymy planszę
+        void initBoard()                                //tworzymy planszę
         {
             for (int i = 0; i < grid.Width / SIZE; i++)
             {
@@ -60,7 +60,7 @@ namespace Snake
             _snake = new SnakeObject();
         }
 
-        void initSnake() //tworzymy węża
+        void initSnake()                                //tworzymy węża
         {
             grid.Children.Add(_snake.Head.Rect);
             foreach (SnakeFragment snakeFragment in _snake.Fragments)
@@ -68,19 +68,19 @@ namespace Snake
             _snake.DrawSnake();
         }
 
-        void initWater() //woda
+        void initWater()                                //tworzymy wodę
         {
-            _water = new List<Water>();
-            Water water1 = new Water(40, 20, 15, 15);
+            _water = new List<Water>();                 //woda 1
+            Water water1 = new Water(40, 20, 15, 15);   //zakres
             grid.Children.Add(water1.Rect);
             Grid.SetColumn(water1.Rect, water1.X);
             Grid.SetRow(water1.Rect, water1.Y);
             Grid.SetColumnSpan(water1.Rect, water1.Width);
             Grid.SetRowSpan(water1.Rect, water1.Height);
-            _water.Add(water1);
+            _water.Add(water1); 
 
-            _water = new List<Water>();
-            Water water2 = new Water(11, 11, 10, 50);
+            _water = new List<Water>();                  //woda 2
+            Water water2 = new Water(11, 11, 10, 50);    //zakres
             grid.Children.Add(water2.Rect);
             Grid.SetColumn(water2.Rect, water2.X);
             Grid.SetRow(water2.Rect, water2.Y);
@@ -90,7 +90,7 @@ namespace Snake
 
         }
 
-        private void SnakeMove() //poruszanie się
+        private void SnakeMove()                        //poruszanie się
         {
             int snakeFragmentCount = _snake.Fragments.Count;
             if (_FragmentsAdd > 0)
@@ -111,17 +111,17 @@ namespace Snake
             _snake.Fragments[0].Y = _snake.Head.Y;
             _snake.Head.X += _directionX;
             _snake.Head.Y += _directionY;
-            if (CollisionCheck())
+            if (CollisionCheck())                       //reakcja kolizja
                 End();
             else
             {
-                if (FoodCheck())
+                if (FoodCheck())                        //reakcja jedzenie
                     DrawFood();
                 _snake.DrawSnake();
             }
         }
 
-        void initTimer() //czas
+        void initTimer()                                 //czas
         {
             _timer = new DispatcherTimer();
             _timer.Tick += new EventHandler(_timer_Tick);
@@ -130,11 +130,11 @@ namespace Snake
 
         }
 
-        void _timer_Tick(object sender, EventArgs e) //ruch węża w czasie
+        void _timer_Tick(object sender, EventArgs e)    //ruch węża w czasie
         {
             SnakeMove();
         }
-        void initFood() //tworzymy jedzenie
+        void initFood()                                 //tworzymy jedzenie
         {
             _food = new SnakeFragment(10, 10);
             _food.Rect.Width = _food.Rect.Height = 10;
@@ -145,7 +145,7 @@ namespace Snake
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
-        //poruszanie się za pomocą strzałek
+                                                        //poruszanie się za pomocą strzałek
         {
             if (e.Key == Key.Left)
             {
@@ -174,12 +174,14 @@ namespace Snake
 
 
 
-        private bool FoodCheck() //sprawdzamy pojawienie się jedzenia
+        private bool FoodCheck()                         //sprawdzamy pojawienie się jedzenia
         {
             Random rand = new Random();
+
+
             if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y) //spotkanie głowa-jedzenie
             {
-                _FragmentsAdd += 10;
+                _FragmentsAdd += 10;                    //zwiększanie
                 for (int i = 0; i < 30; i++)
                 {
                     int x = rand.Next(0, (int)(grid.Width / SIZE));
@@ -209,7 +211,7 @@ namespace Snake
             return false;
         }
 
-        private bool FreeField(int x, int y)
+        private bool FreeField(int x, int y) //sprawdzanie czy pole jest puste 
         {
             if (_snake.Head.X == x && _snake.Head.Y == y)
                 return false;
@@ -222,13 +224,15 @@ namespace Snake
             return true;
         }
 
-        void End() //koniec gry
+        void End()                          //koniec gry             
         {
             _timer.Stop();
             MessageBox.Show("KONIEC GRY");
+            MessageBox.Show("ZAGRAJ PONOWNIE");
+
         }
 
-        private void DrawFood()
+        private void DrawFood()             //rysowanie jedzenia
 
         {
             Grid.SetColumn(_food.Rect, _food.X);
@@ -236,7 +240,7 @@ namespace Snake
         }
 
 
-        bool CollisionCheck() //sprawdzanie kolizji
+        bool CollisionCheck()                //sprawdzanie kolizji
         {
             if (CollisionCheckBorder())
                 return true;
@@ -248,7 +252,7 @@ namespace Snake
 
         }
 
-        bool CollisionCheckBorder() //kolizja ze krawędzią planszy
+        bool CollisionCheckBorder()         //kolizja ze krawędzią planszy
         {
             if (_snake.Head.X < 0 || _snake.Head.X > grid.Width / SIZE)
                 return true;
@@ -258,7 +262,7 @@ namespace Snake
 
         }
 
-        bool CollisionCheckSnake() //koliza z ogonem
+        bool CollisionCheckSnake()           //koliza z ogonem
         {
             foreach (SnakeFragment snakeFragment in _snake.Fragments)
             {
@@ -269,7 +273,7 @@ namespace Snake
         }
 
 
-        bool CollisionCheckWater()
+        bool CollisionCheckWater()           //kolizja z wodą
         {
             foreach (Water water in _water)
             {

@@ -12,14 +12,14 @@ namespace Snake
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public Rectangle Rect { get; private set; }
+        public Rectangle Rect { get; private set; } //kształt
 
-        public SnakeFragment(int x, int y)
+        public SnakeFragment(int x, int y)          
         {
             X = x;
             Y = y;
             Rect = new Rectangle();
-            Rect.Width = Rect.Height = 9;
+            Rect.Width = Rect.Height = 15;
             Rect.Fill = Brushes.Green;
 
         }
