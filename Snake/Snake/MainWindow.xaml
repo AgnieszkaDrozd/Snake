@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Snake"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="650">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="26*"/>
