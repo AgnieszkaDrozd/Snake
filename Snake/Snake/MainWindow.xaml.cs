@@ -71,9 +71,18 @@ namespace Snake
 
         private void SnakeMove()
         {
-            for (int i = _snake.Fragments.Count - 1; i >= 1; i--)
+            int snakeFragmentCount = _snake.Fragments.Count;
+            if (_FragmentsAdd > 0)
             {
-                _snake.Fragments[i].X = _snake.Fragments[i - 1].X;
+                SnakeFragment newFragment = new SnakeFragment(_snake.Fragments[_snake.Fragments.Count - 1].X,
+                    _snake.Fragments[_snake.Fragments.Count -1].Y);
+                grid.Children.Add(newFragment.Rect);
+                _snake.Fragments.Add(newFragment);
+                _FragmentsAdd--;
+            }
+           for (int i = snakeFragmentCount -1; i >= 1; i--)
+            {
+               _snake.Fragments[i].X = _snake.Fragments[i - 1].X;
                 _snake.Fragments[i].Y = _snake.Fragments[i - 1].Y;
             }
 
