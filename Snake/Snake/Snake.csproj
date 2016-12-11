@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="SnakeFragment.cs" />
     <Compile Include="SnakeObject.cs" />
+    <Compile Include="Water.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

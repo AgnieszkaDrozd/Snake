@@ -93,7 +93,7 @@ namespace Snake
             else
             {
                 if (FoodCheck())
-                DrawFood();
+                    DrawFood();
                 _snake.DrawSnake();
             }
         }
@@ -154,9 +154,9 @@ namespace Snake
         private bool FoodCheck() //sprawdzamy pojawienie się jedzenia
         {
             Random rand = new Random();
-            if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y)
+            if (_snake.Head.X == _food.X && _snake.Head.Y == _food.Y) //spotkanie głowa-jedzenie
             {
-                _FragmentsAdd += 1;
+                _FragmentsAdd += 10;
                 for (int i = 0; i < 30; i++)
                 {
                     int x = rand.Next(0, (int)(grid.Width / SIZE));
