@@ -28,7 +28,7 @@ namespace Snake
         private DispatcherTimer _timer;
         private SnakeFragment _food;
         private int _FragmentsAdd;
-
+        private List<Water> _water;
 
         public MainWindow()
         {
@@ -38,6 +38,7 @@ namespace Snake
             initSnake();
             initTimer();
             initFood();
+            initWater();
         }
 
         void initBoard() //tworzymy planszę
@@ -65,6 +66,28 @@ namespace Snake
             foreach (SnakeFragment snakeFragment in _snake.Fragments)
                 grid.Children.Add(snakeFragment.Rect);
             _snake.DrawSnake();
+        }
+
+        void initWater() //woda
+        {
+            _water = new List<Water>();
+            Water water1 = new Water(13, 20, 15, 3);
+            grid.Children.Add(water1.Rect);
+            Grid.SetColumn(water1.Rect, water1.X);
+            Grid.SetRow(water1.Rect, water1.Y);
+            Grid.SetColumnSpan(water1.Rect, water1.Width);
+            Grid.SetRowSpan(water1.Rect, water1.Height);
+            _water.Add(water1);
+
+            _water = new List<Water>();
+            Water water2 = new Water(30, 30, 10, 5);
+            grid.Children.Add(water2.Rect);
+            Grid.SetColumn(water2.Rect, water2.X);
+            Grid.SetRow(water2.Rect, water2.Y);
+            Grid.SetColumnSpan(water2.Rect, water2.Width);
+            Grid.SetRowSpan(water2.Rect, water2.Height);
+            _water.Add(water2);
+
         }
 
         private void SnakeMove() //poruszanie się
@@ -115,7 +138,7 @@ namespace Snake
         {
             _food = new SnakeFragment(10, 10);
             _food.Rect.Width = _food.Rect.Height = 10;
-            _food.Rect.Fill = Brushes.Aqua;
+            _food.Rect.Fill = Brushes.Red;
             grid.Children.Add(_food.Rect);
             Grid.SetColumn(_food.Rect, _food.X);
             Grid.SetRow(_food.Rect, _food.Y);
@@ -219,6 +242,8 @@ namespace Snake
                 return true;
             if (CollisionCheckSnake())
                 return true;
+            if (CollisionCheckWater())
+                return true;
             return false;
 
         }
@@ -243,6 +268,19 @@ namespace Snake
             return false;
         }
 
+
+        bool CollisionCheckWater()
+        {
+            foreach (Water water in _water)
+            {
+                if (_snake.Head.X >= water.X
+                    && _snake.Head.X < water.X + water.Width
+                    && _snake.Head.Y >= water.Y
+                    && _snake.Head.Y < water.Y + water.Height)
+                    return true;
+            }
+            return false;
+        }
 
     }
 
