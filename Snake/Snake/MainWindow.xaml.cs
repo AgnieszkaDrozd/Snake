@@ -28,9 +28,11 @@ namespace Snake
         {
             InitializeComponent();
 
+            initBoard();
+            initSnake();
         }
 
-        void InitBoard()
+        void initBoard()
         {
             for (int i = 0; i < grid.Width / SIZE; i++)
             {

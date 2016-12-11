@@ -16,7 +16,7 @@ namespace Snake
         {
             Head = new SnakeFragment(20, 0);
             Head.Rect.Width = Head.Rect.Height = 10;
-            Head.Rect.Fill = System.Windows.Media.Brushes.Black;
+            Head.Rect.Fill = System.Windows.Media.Brushes.DarkGreen;
 
             Fragments = new List<SnakeFragment>();
             Fragments.Add(new SnakeFragment(19, 0));

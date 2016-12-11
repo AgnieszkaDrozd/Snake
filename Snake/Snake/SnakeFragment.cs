@@ -20,7 +20,7 @@ namespace Snake
             Y = y;
             Rect = new Rectangle();
             Rect.Width = Rect.Height = 9;
-            Rect.Fill = Brushes.Black;
+            Rect.Fill = Brushes.Green;
 
         }
 }
