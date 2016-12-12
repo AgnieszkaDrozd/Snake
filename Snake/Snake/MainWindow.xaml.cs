@@ -229,14 +229,9 @@ namespace Snake
             //Pytanie o reset gry
             DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Rozpocząć nową?", "KONIC GRY", MessageBoxButtons.YesNo);
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
-            {
                 init();
-            }
-            else if (dialogResult == System.Windows.Forms.DialogResult.No)
-            {
+            else
                 Environment.Exit(0);
-            }
-
         }
 
         private void DrawFood()             //rysowanie jedzenia
