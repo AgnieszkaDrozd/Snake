@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Forms;
 
 namespace Snake
 {
@@ -34,6 +27,11 @@ namespace Snake
         {
             InitializeComponent();
 
+            init();
+        }
+
+        void init()                                     //tworzymy nową grę
+        {
             initBoard();
             initSnake();
             initTimer();
@@ -144,7 +142,7 @@ namespace Snake
             Grid.SetRow(_food.Rect, _food.Y);
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
                                                         //poruszanie się za pomocą strzałek
         {
             if (e.Key == Key.Left)
@@ -227,8 +225,17 @@ namespace Snake
         void End()                          //koniec gry             
         {
             _timer.Stop();
-            MessageBox.Show("KONIEC GRY");
-            MessageBox.Show("ZAGRAJ PONOWNIE");
+
+            //Pytanie o reset gry
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Rozpocząć nową?", "KONIC GRY", MessageBoxButtons.YesNo);
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                init();
+            }
+            else if (dialogResult == System.Windows.Forms.DialogResult.No)
+            {
+                Environment.Exit(0);
+            }
 
         }
 

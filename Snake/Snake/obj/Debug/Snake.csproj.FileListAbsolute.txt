@@ -12,3 +12,11 @@ C:\Users\eska\Desktop\Snake\Snake\bin\Debug\Snake.pdb
 C:\Users\eska\Desktop\Snake\Snake\obj\Debug\Snake.g.resources
 C:\Users\eska\Desktop\Snake\Snake\obj\Debug\Snake.Properties.Resources.resources
 C:\Users\eska\Desktop\Snake\Snake\obj\Debug\Snake.csproj.GenerateResource.Cache
+C:\Users\eska\Desktop\Snake - Kopia\Snake\bin\Debug\Snake.exe.config
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\Snake.exe
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\Snake.pdb
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\Snake.csprojResolveAssemblyReference.cache
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\MainWindow.g.cs
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\App.g.cs
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\Snake_MarkupCompile.cache
+C:\Users\eska\Desktop\Snake - Kopia\Snake\obj\Debug\Snake_MarkupCompile.lref
